@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
         }
 
     }
+    [SerializeField] private FixedJoystick joystick;
     [SerializeField] private CinemachineFreeLook freeLook;
     [SerializeField] private float swipeSpeed = 0.2f;
 
@@ -60,11 +61,13 @@ public class CameraController : MonoBehaviour
         if (Touch.activeTouches.Count > 0)
         {
             _activeTouch = Touch.activeTouches[0];
-            Debug.Log("Run2");
 
-            if (IsPointerOverUIObject(_activeTouch.screenPosition)) return;
+            if (IsPointerOverUIObject(_activeTouch.screenPosition) || joystick.IsUsingJoystic)
+            {
+                return;
+            }
 
-            Debug.Log("Run");
+
             if (_activeTouch.phase == TouchPhase.Began)
             {
                 _firstPoint = _activeTouch.screenPosition;
@@ -83,6 +86,6 @@ public class CameraController : MonoBehaviour
 
         _xSwipeAmount = _swipeDirX * swipeSpeed * Time.deltaTime * Vector3.up;
 
-        freeLook.m_XAxis.m_InputAxisValue += _xSwipeAmount.x;
+        freeLook.m_XAxis.Value += _xSwipeAmount.y;
     }
 }

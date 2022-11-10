@@ -26,4 +26,5 @@ public static class Helpers
         _waitDictionary[time] = new WaitForSeconds(time);
         return _waitDictionary[time];
     }
+    public static Vector3 ToV3(this Vector2 input) => new Vector3(input.x, 0, input.y);
 }

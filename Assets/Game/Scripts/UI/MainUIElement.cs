@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 public class MainUIElement : UIScript
 {
     [SerializeField] private Button shootBtn;
@@ -22,4 +23,5 @@ public class MainUIElement : UIScript
     {
         InputHandler.Instance.ShootButton = true;
     }
+
 }

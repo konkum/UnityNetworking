@@ -30,7 +30,10 @@ public class Player : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
             data.Direction.Normalize();
+
             _cc.Move(5 * data.Direction * Runner.DeltaTime);
+
+            this.transform.rotation = Quaternion.LookRotation(new Vector3(data.CamDirection.x, 0, data.CamDirection.z));
 
             if (data.Direction.sqrMagnitude > 0)
             {

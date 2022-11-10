@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class BasicNetworking : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkPrefabRef playerPrefab;
+    [SerializeField] private FixedJoystick joystick;
     private NetworkRunner _runner;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
@@ -40,13 +41,17 @@ public class BasicNetworking : MonoBehaviour, INetworkRunnerCallbacks
     {
         var data = new NetworkInputData();
 
-        var horizontal = Input.GetAxis("Horizontal");
-        var vertical = Input.GetAxis("Vertical");
+        var horizontal = joystick.Horizontal;
+        var vertical = joystick.Vertical;
 
         data.Direction += Vector3.forward * vertical;
         data.Direction += Vector3.right * horizontal;
 
+        data.Direction = Helpers.Camera.transform.rotation * data.Direction;
+
         data.ShootButton = InputHandler.Instance.ShootButton;
+
+        data.CamDirection = Helpers.Camera.transform.forward;
 
         input.Set(data);
     }
